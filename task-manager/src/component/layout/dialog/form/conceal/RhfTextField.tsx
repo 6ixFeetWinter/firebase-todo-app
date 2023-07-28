@@ -16,7 +16,7 @@ export type RhfTextAreaProps<T extends NewPostInput> = TextProps &
 export const RhfTextField = <T extends NewPostInput>(
   props: RhfTextAreaProps<T>
 ) => {
-  const { name, control, placeholder } = props;
+  const { name, control, placeholder, label } = props;
   const {
     field: { ref, ...rest },
     formState: { errors },
@@ -26,6 +26,7 @@ export const RhfTextField = <T extends NewPostInput>(
     <MyTextField
       inputRef={ref}
       placeholder={placeholder}
+      label={label}
       {...rest}
       error={(errors[name]?.message as string) || undefined}
     />

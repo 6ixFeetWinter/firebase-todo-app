@@ -3,13 +3,23 @@ import { DataGrid } from "@mui/x-data-grid";
 import CheckIcon from "@mui/icons-material/Check";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { GetTask, Update } from "../../globalState/hooks/CreateState";
+import {
+  EditTask,
+  GetTask,
+  Update,
+  useEdit,
+} from "../../globalState/hooks/CreateState";
 import dayjs from "dayjs";
 export const Tasks = () => {
   const list = GetTask();
+  const { getSingleTask } = EditTask();
   const { updateStatus, deleteTask } = Update();
   const [columns, setColumns] = useState<any[]>();
   const [row, setRow] = useState<any[]>();
+  const { isEditActive } = useEdit();
+  {
+    /* useEffectの外にcolumnsを出したらalign:"center"の箇所でエラーが出てしまいうまく実行できませんでした */
+  }
   useEffect(() => {
     if (list) {
       setColumns([
@@ -77,11 +87,18 @@ export const Tasks = () => {
           headerName: "編集/詳細",
           width: 83,
           align: "center",
-          renderCell: () => (
-            <EditIcon
-              sx={{ color: "#3F51B5", fontSize: 24, cursor: "pointer" }}
-            />
-          ),
+          renderCell: (params: any) => {
+            const path = params.row.id;
+            return (
+              <EditIcon
+                sx={{ color: "#3F51B5", fontSize: 24, cursor: "pointer" }}
+                onClick={() => {
+                  getSingleTask(path);
+                  isEditActive();
+                }}
+              />
+            );
+          },
         },
         {
           field: "delete",

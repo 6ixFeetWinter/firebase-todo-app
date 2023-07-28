@@ -1,13 +1,14 @@
 import React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useCreate } from "../../globalState/hooks/CreateState";
+import { useCreate, useEdit } from "../../globalState/hooks/CreateState";
 import { Typography } from "@mui/material";
 import { Form } from "./form/Form";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 export const Dialog = () => {
-  const { isCreateNegative } = useCreate();
+  const { isCreateNegative, isCreate } = useCreate();
+  const { isEditNegative } = useEdit();
   return (
     <div css={dialogBg}>
       <div css={dialog}>
@@ -15,7 +16,10 @@ export const Dialog = () => {
           <Typography sx={dialogTitle} variant="h4">
             新規作成
           </Typography>
-          <CancelIcon sx={cancelIcon} onClick={() => isCreateNegative()} />
+          <CancelIcon
+            sx={cancelIcon}
+            onClick={() => (isCreate ? isCreateNegative() : isEditNegative())}
+          />
         </div>
         <div css={dialogBody}>
           <Form />
@@ -31,7 +35,7 @@ const dialogBg = css({
   width: "100%",
   height: "100svh",
   background: "#00000080",
-  zIndex: "1",
+  zIndex: "10",
 });
 const dialog = css({
   position: "absolute",
@@ -64,6 +68,6 @@ const cancelIcon = {
 };
 const dialogBody = css({
   width: "100%",
-  height: "500px",
+  padding: "20px",
   background: "#fff",
 });

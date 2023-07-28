@@ -8,6 +8,15 @@ export const appTheme = createTheme({
 });
 
 export const myStyle = {
+  "&.MuiTextField-root": {
+    minWidth: "148px",
+  },
+  "& .css-brmcl4-MuiStack-root": {
+    paddingTop: "0",
+  },
+  "& .css-1pduc5x-MuiStack-root": {
+    paddingTop: "0",
+  },
   "& .MuiInputBase-input": {
     color: "#000000", // 入力文字の色
   },
@@ -47,6 +56,7 @@ export const myStyle = {
       },
     },
   },
+
   m: "0",
   padding: "0",
 };
